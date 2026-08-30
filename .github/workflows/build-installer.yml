@@ -28,6 +28,9 @@ jobs:
       - name: Install Dependencies
         run: npm install --legacy-peer-deps
 
+      - name: Generate ECS Installer Branding Assets
+        run: node scripts/generate-assets.js
+
       - name: Build Web Frontend Assets
         run: npm run build
 

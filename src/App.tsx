@@ -55,10 +55,13 @@ import { useAuth } from './context/AuthContext';
 import { APP_VERSION } from './version';
 import { PanelLeftOpen } from 'lucide-react';
 import { NIAGARA_PALETTE_ITEMS } from './data/paletteDefinitions';
+import { EcsBootSplash } from './components/EcsBootSplash';
+import { AnimatePresence } from 'motion/react';
 
 function NiagaraStudioApp() {
   const { theme, isDark } = useNiagaraTheme();
   const aspectInfo = useDeviceAspect();
+  const [isBooting, setIsBooting] = useState(true);
 
   // PWA Offline Manager
   const { isOnline, isInstallable, promptInstall } = usePwaManager();
@@ -1891,6 +1894,11 @@ function NiagaraStudioApp() {
         block={scheduleModalBlock}
         onUpdateSchedule={handleUpdateSchedule}
       />
+
+      {/* Enterprise Boot Launch Splash Screen */}
+      <AnimatePresence>
+        {isBooting && <EcsBootSplash onComplete={() => setIsBooting(false)} />}
+      </AnimatePresence>
 
       {/* Toast Notification */}
       {notification && (

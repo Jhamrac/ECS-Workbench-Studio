@@ -1,12 +1,39 @@
 const { app, BrowserWindow, ipcMain, shell } = require('electron');
 const path = require('path');
 const { spawn, exec } = require('child_process');
-const { autoUpdater } = require('electron-updater');
+
+let autoUpdater = null;
+try {
+  autoUpdater = require('electron-updater').autoUpdater;
+  autoUpdater.autoDownload = true;
+  autoUpdater.autoInstallOnAppQuit = true;
+} catch (err) {
+  console.warn('Auto-updater module not active:', err.message);
+}
 
 let mainWindow = null;
+let splashWindow = null;
 
 function createWindow() {
+  // Create Frameless Enterprise Splash Screen Window
+  splashWindow = new BrowserWindow({
+    width: 620,
+    height: 380,
+    frame: false,
+    transparent: true,
+    alwaysOnTop: true,
+    resizable: false,
+    center: true,
+    icon: path.join(__dirname, '../public/favicon.ico'),
+    webPreferences: {
+      nodeIntegration: false,
+      contextIsolation: true,
+    },
+  });
+  splashWindow.loadFile(path.join(__dirname, 'splash.html'));
+
   mainWindow = new BrowserWindow({
+    show: false,
     width: 1440,
     height: 900,
     minWidth: 1024,
@@ -33,6 +60,20 @@ function createWindow() {
     mainWindow.loadFile(indexPath);
   }
 
+  // Smooth transition from Splash Screen to Main App Window after launch sequence
+  let splashClosed = false;
+  const revealApp = () => {
+    if (splashClosed) return;
+    splashClosed = true;
+    if (splashWindow && !splashWindow.isDestroyed()) {
+      splashWindow.close();
+    }
+    mainWindow.show();
+    mainWindow.focus();
+  };
+
+  setTimeout(revealApp, 2600);
+
   // Open external links in user's default browser
   mainWindow.webContents.setWindowOpenHandler(({ url }) => {
     if (url.startsWith('http:') || url.startsWith('https:')) {
@@ -43,21 +84,23 @@ function createWindow() {
   });
 
   // Auto-updater event listeners
-  autoUpdater.on('update-available', (info) => {
-    mainWindow?.webContents.send('auto-update-status', { status: 'available', version: info.version });
-  });
+  if (autoUpdater) {
+    autoUpdater.on('update-available', (info) => {
+      mainWindow?.webContents.send('auto-update-status', { status: 'available', version: info.version });
+    });
 
-  autoUpdater.on('download-progress', (progressObj) => {
-    mainWindow?.webContents.send('auto-update-status', { status: 'downloading', percent: Math.round(progressObj.percent) });
-  });
+    autoUpdater.on('download-progress', (progressObj) => {
+      mainWindow?.webContents.send('auto-update-status', { status: 'downloading', percent: Math.round(progressObj.percent) });
+    });
 
-  autoUpdater.on('update-downloaded', () => {
-    mainWindow?.webContents.send('auto-update-status', { status: 'downloaded' });
-  });
+    autoUpdater.on('update-downloaded', () => {
+      mainWindow?.webContents.send('auto-update-status', { status: 'downloaded' });
+    });
 
-  autoUpdater.checkForUpdatesAndNotify().catch(() => {
-    // Ignore update check errors on offline/dev mode
-  });
+    autoUpdater.checkForUpdatesAndNotify().catch(() => {
+      // Ignore update check errors on offline/dev mode
+    });
+  }
 }
 
 // Native PowerShell Execution IPC
@@ -105,7 +148,9 @@ ipcMain.handle('get-app-info', () => {
 });
 
 ipcMain.handle('restart-and-update', () => {
-  autoUpdater.quitAndInstall();
+  if (autoUpdater) {
+    autoUpdater.quitAndInstall();
+  }
 });
 
 app.whenReady().then(createWindow);
