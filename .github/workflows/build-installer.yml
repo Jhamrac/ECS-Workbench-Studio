@@ -1,3 +1,4 @@
+# Trigger workflow build fix
 name: Build & Release Windows Desktop Installer
 
 on:
@@ -37,7 +38,7 @@ jobs:
       - name: Build & Package Windows Electron Installer
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx electron-builder --win --x64 -c.publish=null
+        run: npx electron-builder --win --x64 --publish never
 
       - name: Upload Installer Artifact
         uses: actions/upload-artifact@v4
