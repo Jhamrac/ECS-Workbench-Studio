@@ -146,7 +146,7 @@ export const DesktopAppInstallerModal: React.FC<DesktopAppInstallerModalProps> =
                 <div className="space-y-1 leading-relaxed">
                   <h4 className="font-bold text-sm">You Prompt in AI Studio — GitHub Builds Your Windows App!</h4>
                   <p className="text-[11px] text-slate-300">
-                    You keep using AI Studio just like you always have! Whenever you ask for new features, bug fixes, or UI changes, your project on GitHub automatically triggers a <strong>cloud Virtual Machine</strong> that compiles a fresh <code>NiagaraWorkbench-Setup.exe</code> installer for your computer.
+                    You keep using AI Studio just like you always have! Whenever you ask for new features, bug fixes, or UI changes, your project on GitHub automatically triggers a <strong>cloud Virtual Machine</strong> that compiles a fresh <code>WorkbenchStudio-Installer.exe</code> installer for your computer.
                   </p>
                 </div>
               </div>
@@ -235,7 +235,7 @@ export const DesktopAppInstallerModal: React.FC<DesktopAppInstallerModalProps> =
                   <span>Step 2: GitHub Actions Runs Automatically!</span>
                 </div>
                 <p className="text-[11px] text-slate-300 leading-relaxed">
-                  We created <code>.github/workflows/build-installer.yml</code> in your repository. GitHub automatically builds <code>NiagaraWorkbench-Setup.exe</code> and posts it under <strong>Releases</strong>.
+                  We created <code>.github/workflows/build-installer.yml</code> in your repository. GitHub automatically builds <code>WorkbenchStudio-Installer.exe</code> and posts it under <strong>Releases</strong>.
                 </p>
               </div>
 

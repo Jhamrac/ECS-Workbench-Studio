@@ -1,6 +1,6 @@
 {
-  "appId": "com.ecs.niagaraworkbench",
-  "productName": "ECS Tridium Niagara Workbench Studio",
+  "appId": "com.ecs.workbenchstudio",
+  "productName": "WorkbenchStudio",
   "directories": {
     "output": "dist-electron",
     "buildResources": "public"
@@ -29,7 +29,8 @@
     "allowToChangeInstallationDirectory": true,
     "createDesktopShortcut": true,
     "createStartMenuShortcut": true,
-    "shortcutName": "Niagara Workbench Studio"
+    "shortcutName": "WorkbenchStudio",
+    "artifactName": "WorkbenchStudio-Installer.${ext}"
   },
   "publish": {
     "provider": "github"
