@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ECS Workbench Studio</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+    body {
+      background: transparent;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #ffffff;
+      overflow: hidden;
+      width: 620px;
+      height: 380px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .splash-card {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #0f172a 0%, #061d3a 50%, #020617 100%);
+      border: 1px solid rgba(57, 169, 53, 0.4);
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 30px rgba(10, 82, 156, 0.4);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+    .accent-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #0A529C 0%, #39A935 50%, #0A529C 100%);
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .logo-badge {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: #0A529C;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 15px rgba(10, 82, 156, 0.6);
+    }
+    .title-group h1 {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+    }
+    .title-group h1 span {
+      color: #39A935;
+    }
+    .title-group p {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: #94a3b8;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+    .edition-tag {
+      padding: 4px 10px;
+      border-radius: 9999px;
+      background: rgba(57, 169, 53, 0.15);
+      border: 1px solid rgba(57, 169, 53, 0.4);
+      color: #39A935;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .diag-box {
+      background: rgba(2, 6, 23, 0.8);
+      border: 1px solid rgba(30, 41, 59, 1);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .diag-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .diag-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(57, 169, 53, 0.15);
+      border: 1px solid rgba(57, 169, 53, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #39A935;
+    }
+    .diag-status-label {
+      font-size: 10px;
+      font-family: monospace;
+      color: #64748b;
+      display: block;
+    }
+    .diag-status-text {
+      font-size: 13px;
+      font-weight: 600;
+      color: #e2e8f0;
+      margin-top: 2px;
+    }
+    .diag-percent {
+      font-size: 18px;
+      font-weight: 800;
+      font-family: monospace;
+      color: #39A935;
+    }
+    .progress-track {
+      width: 100%;
+      height: 6px;
+      background: #1e293b;
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #0A529C 0%, #39A935 100%);
+      box-shadow: 0 0 12px rgba(57, 169, 53, 0.8);
+      transition: width 0.05s linear;
+    }
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      color: #64748b;
+      font-weight: 600;
+    }
+    .company {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #39A935;
+      box-shadow: 0 0 8px #39A935;
+    }
+  </style>
+</head>
+<body>
+  <div class="splash-card">
+    <div class="accent-bar"></div>
+    
+    <div class="header">
+      <div class="logo-area">
+        <div class="logo-badge">
+          <svg viewBox="0 0 100 100" width="34" height="34">
+            <circle cx="50" cy="50" r="48" fill="#0A529C" />
+            <path d="M10 52 C 35 47, 65 55, 90 50" stroke="#39A935" stroke-width="6" stroke-linecap="round" fill="none" />
+            <text x="50" y="44" font-family="Arial, sans-serif" font-weight="900" font-size="28" fill="#FFFFFF" text-anchor="middle">ECS</text>
+          </svg>
+        </div>
+        <div class="title-group">
+          <h1>Workbench <span>Studio</span></h1>
+          <p>Engineered Cooling Services &bull; Controls</p>
+        </div>
+      </div>
+      <div class="edition-tag">Enterprise Edition</div>
+    </div>
+
+    <div class="diag-box">
+      <div class="diag-left">
+        <div class="diag-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+            <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+            <line x1="6" y1="6" x2="6.01" y2="6"></line>
+            <line x1="6" y1="18" x2="6.01" y2="18"></line>
+          </svg>
+        </div>
+        <div>
+          <span class="diag-status-label">DIAGNOSTIC INITIALIZATION</span>
+          <div class="diag-status-text" id="statusText">Initializing Niagara 4 Core...</div>
+        </div>
+      </div>
+      <div class="diag-percent" id="percentText">0%</div>
+    </div>
+
+    <div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="company">
+        <div class="dot"></div>
+        A Service Logic Company
+      </div>
+      <div>v1.0.4 &bull; Station Host Ready</div>
+    </div>
+  </div>
+
+  <script>
+    const steps = [
+      "Initializing Niagara 4 Framework Core...",
+      "Loading Station Drivers (BACnet, LonWorks, Modbus)...",
+      "Establishing Security Credentials & SSL Tunneling...",
+      "Binding WireSheet Canvas & Graphics Renderers...",
+      "Syncing Local Station Database & Point Views...",
+      "System Diagnostics Passed. Launching Workbench Studio..."
+    ];
+    let p = 0;
+    const fill = document.getElementById('progressFill');
+    const pct = document.getElementById('percentText');
+    const txt = document.getElementById('statusText');
+
+    const interval = setInterval(() => {
+      p += 2;
+      if (p > 100) {
+        p = 100;
+        clearInterval(interval);
+      }
+      fill.style.width = p + '%';
+      pct.innerText = p + '%';
+      const stepIdx = Math.min(Math.floor((p / 100) * steps.length), steps.length - 1);
+      txt.innerText = steps[stepIdx];
+    }, 40);
+  </script>
+</body>
+</html>
