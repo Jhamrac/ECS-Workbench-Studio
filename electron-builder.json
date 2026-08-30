@@ -3,7 +3,7 @@
   "productName": "WorkbenchStudio",
   "directories": {
     "output": "dist-electron",
-    "buildResources": "public"
+    "buildResources": "build"
   },
   "files": [
     "dist/**/*",
@@ -31,9 +31,15 @@
     "allowElevation": true,
     "createDesktopShortcut": true,
     "createStartMenuShortcut": true,
-    "shortcutName": "WorkbenchStudio",
+    "shortcutName": "ECS Workbench Studio",
     "uninstallDisplayName": "Engineered Cooling Services - WorkbenchStudio",
     "artifactName": "WorkbenchStudio-Installer.${ext}",
-    "runAfterFinish": true
+    "runAfterFinish": true,
+    "installerHeader": "build/installerHeader.bmp",
+    "installerHeaderIcon": "build/installerHeaderIcon.bmp",
+    "installerSidebar": "build/installerSidebar.bmp",
+    "uninstallerSidebar": "build/uninstallerSidebar.bmp",
+    "include": "build/installer.nsh",
+    "warningsAsErrors": false
   }
 }

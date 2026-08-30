@@ -2,6 +2,13 @@ const { app, BrowserWindow, ipcMain, shell } = require('electron');
 const path = require('path');
 const { spawn, exec } = require('child_process');
 
+// Enforce single instance locking
+const gotTheLock = app.requestSingleInstanceLock();
+if (!gotTheLock) {
+  app.quit();
+  process.exit(0);
+}
+
 let autoUpdater = null;
 try {
   autoUpdater = require('electron-updater').autoUpdater;
@@ -150,6 +157,14 @@ ipcMain.handle('get-app-info', () => {
 ipcMain.handle('restart-and-update', () => {
   if (autoUpdater) {
     autoUpdater.quitAndInstall();
+  }
+});
+
+app.on('second-instance', () => {
+  if (mainWindow) {
+    if (mainWindow.isMinimized()) mainWindow.restore();
+    mainWindow.show();
+    mainWindow.focus();
   }
 });
 

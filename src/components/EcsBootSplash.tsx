@@ -13,12 +13,12 @@ export const EcsBootSplash: React.FC<EcsBootSplashProps> = ({ onComplete, autoDi
   const [isFinished, setIsFinished] = useState(false);
 
   const steps = [
-    { text: 'Initializing Niagara 4 Framework Core...', icon: Cpu },
-    { text: 'Loading Station Drivers (BACnet, LonWorks, Modbus)...', icon: Radio },
-    { text: 'Establishing Security Credentials & SSL Tunneling...', icon: ShieldCheck },
+    { text: 'Loading Niagara 4 Framework Core...', icon: Cpu },
+    { text: 'Initializing Station Drivers (BACnet, LonWorks, Modbus)...', icon: Radio },
+    { text: 'Securing Credentials & SSL Tunneling...', icon: ShieldCheck },
     { text: 'Binding WireSheet Canvas & Graphics Renderers...', icon: Terminal },
     { text: 'Syncing Local Station Database & Point Views...', icon: Sparkles },
-    { text: 'System Diagnostics Passed. Launching Workbench Studio...', icon: CheckCircle2 }
+    { text: 'Workbench Studio Ready. Opening workspace...', icon: CheckCircle2 }
   ];
 
   useEffect(() => {
@@ -99,7 +99,7 @@ export const EcsBootSplash: React.FC<EcsBootSplashProps> = ({ onComplete, autoDi
                 <StepIcon className="w-5 h-5 animate-pulse" />
               </div>
               <div>
-                <span className="text-xs text-slate-400 font-mono block">DIAGNOSTIC STATUS</span>
+                <span className="text-xs text-slate-400 font-mono block">SYSTEM INITIALIZATION</span>
                 <AnimatePresence mode="wait">
                   <motion.p
                     key={currentStepIndex}

@@ -197,15 +197,12 @@
       <div class="diag-left">
         <div class="diag-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
-            <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
-            <line x1="6" y1="6" x2="6.01" y2="6"></line>
-            <line x1="6" y1="18" x2="6.01" y2="18"></line>
+            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
           </svg>
         </div>
         <div>
-          <span class="diag-status-label">DIAGNOSTIC INITIALIZATION</span>
-          <div class="diag-status-text" id="statusText">Initializing Niagara 4 Core...</div>
+          <span class="diag-status-label">SYSTEM INITIALIZATION</span>
+          <div class="diag-status-text" id="statusText">Loading Niagara 4 Framework Core...</div>
         </div>
       </div>
       <div class="diag-percent" id="percentText">0%</div>
@@ -228,12 +225,12 @@
 
   <script>
     const steps = [
-      "Initializing Niagara 4 Framework Core...",
-      "Loading Station Drivers (BACnet, LonWorks, Modbus)...",
-      "Establishing Security Credentials & SSL Tunneling...",
+      "Loading Niagara 4 Framework Core...",
+      "Initializing Station Drivers (BACnet, LonWorks, Modbus)...",
+      "Securing Credentials & SSL Tunneling...",
       "Binding WireSheet Canvas & Graphics Renderers...",
       "Syncing Local Station Database & Point Views...",
-      "System Diagnostics Passed. Launching Workbench Studio..."
+      "Workbench Studio Ready. Launching application..."
     ];
     let p = 0;
     const fill = document.getElementById('progressFill');

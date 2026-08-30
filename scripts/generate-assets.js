@@ -190,7 +190,9 @@ if (!fs.existsSync('public')) fs.mkdirSync('public');
 
 // Write BMP files
 fs.writeFileSync('build/installerSidebar.bmp', sidebarBMP);
+fs.writeFileSync('build/uninstallerSidebar.bmp', sidebarBMP);
 fs.writeFileSync('build/installerHeader.bmp', headerBMP);
+fs.writeFileSync('build/installerHeaderIcon.bmp', iconBMP48);
 
 // Create ICO files
 const icoBuffer = createICO([{ width: 48, height: 48, buf: iconBMP48 }]);
