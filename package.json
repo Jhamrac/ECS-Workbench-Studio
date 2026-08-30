@@ -1,5 +1,8 @@
 {
-  "name": "react-example",
+  "name": "workbench-studio",
+  "productName": "WorkbenchStudio",
+  "description": "Engineered Cooling Services - Tridium Niagara Workbench Studio",
+  "author": "Engineered Cooling Services",
   "private": true,
   "version": "1.0.0",
   "main": "electron/main.cjs",

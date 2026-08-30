@@ -22,8 +22,7 @@
         ]
       }
     ],
-    "requestedExecutionLevel": "asInvoker",
-    "icon": "public/favicon.ico"
+    "requestedExecutionLevel": "asInvoker"
   },
   "nsis": {
     "oneClick": false,
@@ -36,8 +35,5 @@
     "uninstallDisplayName": "Engineered Cooling Services - WorkbenchStudio",
     "artifactName": "WorkbenchStudio-Installer.${ext}",
     "runAfterFinish": true
-  },
-  "publish": {
-    "provider": "github"
   }
 }
