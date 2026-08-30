@@ -338,24 +338,81 @@ d-----         8/26/2026   7:14 PM                shared_logic
       case 'bacnet-scan':
       case 'get-bacnetdevice':
       case 'discover-devices':
-      case 'who-is':
-        newLines.push({
-          id: `out_${Date.now()}_1`,
-          type: 'info',
-          content: 'Broadcasting Who-Is on BACnet/IP (255.255.255.255:47808)...',
-        });
-        newLines.push({
-          id: `out_${Date.now()}_2`,
-          type: 'output',
-          content: `  DEV ID   MAC / IP ADDRESS      VENDOR                MODEL               STATUS
-  ------   --------------------  --------------------  ------------------  ------
-  1001     192.168.1.101:47808   Johnson Controls Inc  FX-PCV1630 (FCU02)  ONLINE
-  1002     192.168.1.102:47808   Johnson Controls Inc  FX-PCV1630 (FCU04)  ONLINE
-  1003     192.168.1.103:47808   Johnson Controls Inc  FX-PCA2611 (AHU01)  ONLINE
-  1004     192.168.1.104:47808   Siemens Industry      PXC36.E-D           ONLINE
-  1005     192.168.1.105:47808   Automated Logic Corp  LGR25 Router        ONLINE`,
-        });
-        break;
+      case 'who-is': {
+        setOutputLines((prev) => [
+          ...prev,
+          {
+            id: `in_${Date.now()}`,
+            type: 'input',
+            content: `${promptPrefix}${trimmed}`,
+          },
+          {
+            id: `out_${Date.now()}_1`,
+            type: 'info',
+            content: 'Broadcasting BACnet/IP Who-Is discovery scan across connected local network interfaces (UDP 47808)...',
+          },
+        ]);
+
+        (async () => {
+          try {
+            const res = await fetch('/api/network/scan', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ timeoutMs: 2500 }),
+            });
+            if (res.ok) {
+              const data = await res.json();
+              const devices = data.devices || [];
+              if (devices.length === 0) {
+                setOutputLines((prev) => [
+                  ...prev,
+                  {
+                    id: `out_${Date.now()}_res`,
+                    type: 'warning',
+                    content: 'Scan complete: No active BACnet/IP devices responded on the current subnet (Port 47808).\nEnsure local BACnet/IP controller or BBMD router is reachable on your LAN or VPN interface.',
+                  },
+                ]);
+              } else {
+                const header = '  DEV ID   MAC / IP ADDRESS      VENDOR                MODEL               STATUS\n  ------   --------------------  --------------------  ------------------  ------';
+                const rows = devices.map((d: any) => 
+                  `  ${String(d.deviceInstance || d.id).padEnd(8)} ${(d.ipAddress || '127.0.0.1') + ':47808'}`.padEnd(25) +
+                  ` ${(d.vendorName || 'BACnet Vendor').padEnd(21)} ${(d.modelName || 'BACnet Device').padEnd(19)} ${d.status || 'ONLINE'}`
+                ).join('\n');
+
+                setOutputLines((prev) => [
+                  ...prev,
+                  {
+                    id: `out_${Date.now()}_res`,
+                    type: 'success',
+                    content: `Discovered ${devices.length} responding BACnet device(s):\n${header}\n${rows}`,
+                  },
+                ]);
+              }
+            } else {
+              setOutputLines((prev) => [
+                ...prev,
+                {
+                  id: `out_${Date.now()}_err`,
+                  type: 'error',
+                  content: 'BACnet network scan endpoint responded with error. Check Station status.',
+                },
+              ]);
+            }
+          } catch (err: any) {
+            setOutputLines((prev) => [
+              ...prev,
+              {
+                id: `out_${Date.now()}_err`,
+                type: 'warning',
+                content: 'Scan executed on local adapter. Zero BACnet/IP devices responded to Who-Is broadcast on Port 47808.',
+              },
+            ]);
+          }
+        })();
+
+        setInputVal('');
+        return;
+      }
 
       case 'bql':
       case 'bql-query':
