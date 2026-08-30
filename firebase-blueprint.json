@@ -1,0 +1,63 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile document containing account info and settings",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 256 },
+        "displayName": { "type": "string", "maxLength": 128 },
+        "photoURL": { "type": "string", "maxLength": 1024 },
+        "createdAt": { "type": "string", "maxLength": 64 },
+        "updatedAt": { "type": "string", "maxLength": 64 },
+        "activeProgramId": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["uid", "email", "createdAt", "updatedAt"]
+    },
+    "StationProgram": {
+      "title": "StationProgram",
+      "description": "ECS Workbench Studio logic program with wire sheet blocks, links, and SOO",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 128 },
+        "category": { "type": "string", "maxLength": 64 },
+        "description": { "type": "string", "maxLength": 1024 },
+        "programData": { "type": "string", "maxLength": 500000 },
+        "createdAt": { "type": "string", "maxLength": 64 },
+        "updatedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "userId", "title", "programData", "createdAt", "updatedAt"]
+    },
+    "ChatConversation": {
+      "title": "ChatConversation",
+      "description": "Saved AI Chat conversation history for cloud sync",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 256 },
+        "createdAt": { "type": "number" },
+        "updatedAt": { "type": "number" },
+        "messages": { "type": "array" }
+      },
+      "required": ["id", "userId", "title", "createdAt", "updatedAt", "messages"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "User profile collection"
+    },
+    "/users/{userId}/programs/{programId}": {
+      "schema": { "$ref": "#/entities/StationProgram" },
+      "description": "User saved ECS Workbench Studio programs collection"
+    },
+    "/users/{userId}/chatConversations/{convId}": {
+      "schema": { "$ref": "#/entities/ChatConversation" },
+      "description": "User saved AI chat conversations collection"
+    }
+  }
+}

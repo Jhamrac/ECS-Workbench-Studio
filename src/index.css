@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+/* Font setups depending on theme */
+:root {
+  --font-family-sans: "Tahoma", "Geneva", "Arial", sans-serif;
+  --font-family-mono: "Courier New", Courier, monospace;
+}
+
+.classic-theme {
+  --font-family-sans: "Tahoma", "Geneva", "Arial", sans-serif;
+  --font-family-mono: "Courier New", Courier, monospace;
+}
+
+.modern-theme {
+  --font-family-sans: "Plus Jakarta Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-family-mono: "JetBrains Mono", monospace;
+}
+
+html, body, #root {
+  font-family: var(--font-family-sans);
+  transition: font-family 0.3s ease;
+}
+
+.font-sans {
+  font-family: var(--font-family-sans) !important;
+}
+
+.font-mono {
+  font-family: var(--font-family-mono) !important;
+}
+
+/* Theme-specific custom overrides */
+
+/* 1. Classic (Classic Tridium / Windows AX Style) */
+.classic-theme {
+  /* Classic retro 3D buttons */
+  .classic-bevel {
+    border-top: 1px solid #ffffff !important;
+    border-left: 1px solid #ffffff !important;
+    border-right: 1.5px solid #64748b !important;
+    border-bottom: 1.5px solid #64748b !important;
+    border-radius: 2px !important;
+    background: linear-gradient(to bottom, #f1f5f9, #cbd5e1) !important;
+    color: #0f172a !important;
+  }
+  
+  .classic-bevel:active {
+    border-top: 1.5px solid #64748b !important;
+    border-left: 1.5px solid #64748b !important;
+    border-right: 1px solid #ffffff !important;
+    border-bottom: 1px solid #ffffff !important;
+    background: #94a3b8 !important;
+  }
+
+  /* Classic grey-blue header bar gradients */
+  .classic-header {
+    background: linear-gradient(to bottom, #e2e8f0, #cbd5e1) !important;
+    border-bottom: 1.5px solid #94a3b8 !important;
+    color: #0f172a !important;
+    font-weight: bold !important;
+  }
+
+  /* Retro Niagara block style overrides */
+  .niagara-node-box {
+    border: 1.5px solid #475569 !important;
+    border-radius: 2px !important;
+    box-shadow: 2px 2px 0px rgba(0,0,0,0.2) !important;
+    background-color: #f8fafc !important;
+  }
+
+  .niagara-node-header {
+    background: linear-gradient(to right, #00529b, #2563eb) !important;
+    border-radius: 0px !important;
+    color: white !important;
+    font-weight: bold !important;
+    font-family: var(--font-family-sans) !important;
+    border-bottom: 1px solid #00386b !important;
+  }
+}
+
+/* 2. Modern (Sleek Engineering Dark Theme with Rich Color Balancing) */
+.modern-theme {
+  .classic-bevel {
+    background: #0f1e38 !important;
+    border: 1px solid #1e3a6a !important;
+    border-radius: 8px !important;
+    color: #e2e8f0 !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3) !important;
+  }
+
+  .classic-bevel:hover {
+    background: #162b4e !important;
+    border-color: #38bdf8 !important;
+    color: #ffffff !important;
+  }
+
+  .classic-bevel:active {
+    transform: scale(0.98);
+  }
+
+  .classic-header {
+    background: linear-gradient(to right, #09152b, #0f2347) !important;
+    border-bottom: 1px solid #162d55 !important;
+    color: #f1f5f9 !important;
+  }
+
+  .niagara-node-box {
+    border: 1px solid #1e3a6a !important;
+    border-radius: 10px !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4) !important;
+    background-color: #091528 !important;
+  }
+
+  .niagara-node-header {
+    background: linear-gradient(to right, #0b254a, #133b73) !important;
+    border-radius: 8px 8px 0 0 !important;
+    color: #e2e8f0 !important;
+    font-family: var(--font-family-sans) !important;
+    border-bottom: 1px solid #1e3a6a !important;
+  }
+}
+
+@keyframes flow {
+  from {
+    stroke-dashoffset: 20;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-flow {
+  animation: flow 1s linear infinite;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+.classic-theme ::-webkit-scrollbar-track {
+  background: #f0f0f0;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3.5px;
+}
+.classic-theme ::-webkit-scrollbar-thumb {
+  background: #adadad;
+  border: 1.5px solid #f0f0f0;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+.classic-theme ::-webkit-scrollbar-thumb:hover {
+  background: #7a7a7a;
+}
+
+/* 3. Dynamic Signal Wire Flow Animations */
+@keyframes wire-signal-dash {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+
+.animate-wire-flow {
+  stroke-dasharray: 8, 4;
+  animation: wire-signal-dash 0.9s linear infinite;
+}
+
+.animate-wire-flow-fast {
+  stroke-dasharray: 6, 3;
+  animation: wire-signal-dash 0.45s linear infinite;
+}
+
+.animate-wire-flow-alarm {
+  stroke-dasharray: 4, 2;
+  animation: wire-signal-dash 0.25s linear infinite;
+}

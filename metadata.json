@@ -1,0 +1,6 @@
+{
+  "name": "ECS Workbench Studio",
+  "description": "Modular engineering studio and visual block wire sheet builder for Niagara Tridium with live simulation, complete Network Studio suite for BACnet & field protocols, Report Service with Site Audit Report builder and customer folder management, AI assistance, and Workbench rebuild manuals.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

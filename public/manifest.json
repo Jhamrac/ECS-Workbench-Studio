@@ -1,0 +1,23 @@
+{
+  "short_name": "ECS Workbench",
+  "name": "ECS Workbench Studio",
+  "description": "ECS Workbench Studio - Modular engineering toolset & visual Niagara Wire Sheet builder.",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#0b101d",
+  "theme_color": "#00529b",
+  "display": "standalone",
+  "orientation": "any",
+  "scope": "/"
+}
