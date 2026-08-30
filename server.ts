@@ -12,7 +12,7 @@ import { synthesizeNiagaraProgram, analyzeWiresheetHeuristics, translateNiagaraF
 dotenv.config();
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
 // Security: Disable X-Powered-By header
 app.disable("x-powered-by");
